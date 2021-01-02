@@ -1,0 +1,15 @@
+.idea
+dist
+build
+cmake-build-debug
+CMakeFiles
+sdkconfig.old
+__pycache__
+*.bak
+*-bak
+*.log
+*.log.*
+\!archive
+
+*_log.txt
+*-log.txt

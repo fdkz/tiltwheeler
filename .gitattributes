@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+# https://git-scm.com/docs/gitattributes
+# https://www.reddit.com/r/git/comments/952a03/gitgitlab_and_line_endings/
+
+# text=auto : ensure that line endings of all pushed files get normalized (to LF)
+#      !eol : ensure that all checked-out files are exactly like in the remote repository.
+
+#* text=auto !eol
+
+# what's this?: * -text
+
+#$ echo "* text=auto" >.gitattributes
+#$ git add --renormalize .
+#$ git status        # Show files that will be normalized
+#$ git commit -m "Introduce end-of-line normalization"
