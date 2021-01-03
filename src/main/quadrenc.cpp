@@ -44,6 +44,9 @@ static i32               l_count_base[QUADRENC_NUM_ENCODERS];
 //     gpio2 - Control GPIO HIGH=count up, LOW=count down
 //
 void quadrenc_init_encoder(u32 pcnt_unit_num, u8 gpio1, u8 gpio2) {
+
+	// TODO: add weak pulldowns?
+
 	pcnt_config_t pcnt_config = {
 		.pulse_gpio_num = gpio1,
 		.ctrl_gpio_num = gpio2,

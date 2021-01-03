@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdio>
 #include <sys/socket.h> // getsockopt
+#include <math.h>
 
 using namespace std;
 
@@ -24,6 +25,7 @@ using namespace std;
 
 #include "quadrenc.h"
 #include "raw_imu.h"
+#include "motor.h"
 
 
 extern "C" [[noreturn]] void app_main(void)
@@ -32,9 +34,12 @@ extern "C" [[noreturn]] void app_main(void)
 	quadrenc_init_encoder(1, 32, 33);
 
 	raw_imu_init();
+	motor_init();
 
 	while (1) {
 		vTaskDelay(pdMS_TO_TICKS(100));
+		vTaskDelay(pdMS_TO_TICKS(10));
+		//vTaskDelay(pdMS_TO_TICKS(100));
 		i32 count0 = quadrenc_get_count(0);
 		i32 count1 = quadrenc_get_count(1);
 
@@ -49,8 +54,17 @@ extern "C" [[noreturn]] void app_main(void)
 		float wz = raw_imu_gyro_to_si(r->wz);
 		float temp = raw_imu_temperature_to_si(r->temperature);
 
+		static float t;
+		t += 0.01;
+		//float duty = sin(t * 90.f * 3.14f / 180.f);
+		float duty = sin(t * 90.f * 3.14f / 180.f);
+
+		motor_set_duty(0, duty);
+		motor_set_duty(1, duty);
+
 		//printf("enc: %i %i ax %.3f wx %.3f temp %.3f\n", count0, count1);
 		printf("enc: %i %i ax %.3f wx %.3f temp %.3f\n", count0, count1, ax, wx, temp);
+		printf("enc: %i %i ax %.3f wx %.3f temp %.3f duty %.3f\n", count0, count1, ax, wx, temp, duty);
 	}
 }
 

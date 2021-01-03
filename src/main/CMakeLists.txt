@@ -4,6 +4,7 @@ idf_component_register(
         "main.cpp"
         "quadrenc.cpp"
         "raw_imu.cpp"
+        "motor.cpp"
 
         INCLUDE_DIRS
         ".")
