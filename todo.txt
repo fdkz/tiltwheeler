@@ -1,0 +1,33 @@
+
+  * decode encoder feed. gpio interrupts.
+  * generate pwm? for h-bridge.
+  * read gyro data over spi. damn! new driver for esp32.
+  * ps4 controller over bluetooth.
+
+
+download sixaxis pair tool from
+https://www.filehorse.com/download-sixaxispairtool/
+SixaxisPairToolSetup-0.3.1.exe
+
+install (installs a driver. takes a minute..)
+
+run. a small window appears. "Current Master: No device found.." and "Change Master:".
+Connect PS4 controller over USB. "Current Master: 50:eb:71:f8:9a:2a" appears. This number is what you need..
+This should be the MAC address of the device (PS4 console) that the controller connects to.
+If you set ESP32 bluetooth MAC to the same address, then the controller should connect to ESP32!
+
+50:eb:71:f8:9a:2a
+
+
+
+
+SixaxisPairTool is a gaming accessory utility that can enable pairing of Sixaxis, Navigation, DualShock 3 & 4 controllers to the mobile devices that are not natively supporting them. To do this, an intermediary app for PC was created to facilitate synchronization of Bluetooth addresses between the gamepads and mobile devices, enabling fast, reliable, low lag and easy to use pairing both in the home and on the go.
+
+To pair the PlayStation gamepad to the mobile phone or a tablet that doesn’t have the native OS support to do so (Dualshock 4 gained that ability only with the arrival of Android 10, an OS version that will not come to all Android devices), you will first need to download and install this app on your PC. Then you need to connect and pair the gamepad with the PC (you will need to have Bluetooth dongle or integrated BT received in your PC motherboard, usually found in laptops) and find out the exact Bluetooth address of your Android mobile device.
+
+Sixaxis Pair Tool has an incredibly simple interface that consists of just one small screen that showcases the current BT address of the connected gamepad, and an empty field for entering a new BT address. By copy and pasting the exact BT address of your Android device, the gamepad will be synced to that address and lose the connection to the PC. This way, you can immediately start using the gamepad on a mobile device, skipping the initial connection handshake that prevents many accessories to automatically pair with the Android OS. If the gamepad for some reason loses the ability to connect to the mobile device, or you wish to pair it with another device, simply repeat the procedure with SixaxisPairTool on the PC.
+
+In addition to the Windows OS version of this app, Sixaxis Pair Tool is also available on Linux as a standalone app and on macOS as the command line utility called “sixpair”. The app is 100% FREE and can be be used on all modern versions of Windows OS.
+
+
+

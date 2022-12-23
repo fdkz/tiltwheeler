@@ -43,7 +43,9 @@ static i32               l_count_base[QUADRENC_NUM_ENCODERS];
 //     gpio1 - Pulse Input GPIO
 //     gpio2 - Control GPIO HIGH=count up, LOW=count down
 //
-void quadrenc_init_encoder(u32 pcnt_unit_num, u8 gpio1, u8 gpio2) {
+void quadrenc_init_encoder(u32 encoder_num, u8 gpio1, u8 gpio2) {
+
+	pcnt_unit_t pcnt_unit = (pcnt_unit_t)encoder_num;
 
 	// TODO: add weak pulldowns?
 
@@ -59,7 +61,7 @@ void quadrenc_init_encoder(u32 pcnt_unit_num, u8 gpio1, u8 gpio2) {
 		// Set the maximum and minimum limit values to watch
 		.counter_h_lim = PCNT_H_LIM_VAL, // TODO: std::numeric_limits<int16_t>max(): ?
 		.counter_l_lim = PCNT_L_LIM_VAL,
-		.unit = (pcnt_unit_t)pcnt_unit_num,
+		.unit = pcnt_unit,
 		.channel = PCNT_CHANNEL_0,
 	};
 
@@ -74,30 +76,30 @@ void quadrenc_init_encoder(u32 pcnt_unit_num, u8 gpio1, u8 gpio2) {
 		.neg_mode = PCNT_COUNT_DIS,
 		.counter_h_lim = PCNT_H_LIM_VAL,
 		.counter_l_lim = PCNT_L_LIM_VAL,
-		.unit = (pcnt_unit_t)pcnt_unit_num,
+		.unit = pcnt_unit,
 		.channel = PCNT_CHANNEL_1,
 	};
 
 	pcnt_unit_config(&pcnt_config);
 
-	pcnt_event_enable(pcnt_unit_num, PCNT_EVT_H_LIM);
-	pcnt_event_enable(pcnt_unit_num, PCNT_EVT_L_LIM);
+	pcnt_event_enable(pcnt_unit, PCNT_EVT_H_LIM);
+	pcnt_event_enable(pcnt_unit, PCNT_EVT_L_LIM);
 
-	pcnt_counter_pause(pcnt_unit_num);
-	pcnt_counter_clear(pcnt_unit_num);
+	pcnt_counter_pause(pcnt_unit);
+	pcnt_counter_clear(pcnt_unit);
 
 	if (!l_pcnt_isr_handle)
 		pcnt_isr_register(l_pcnt_int, NULL, 0, &l_pcnt_isr_handle);
 
-	pcnt_intr_enable(pcnt_unit_num);
+	pcnt_intr_enable(pcnt_unit);
 
-	pcnt_counter_resume(pcnt_unit_num);
+	pcnt_counter_resume(pcnt_unit);
 }
 
 i32 quadrenc_get_count(u32 encoder_num) {
 	assert(encoder_num < QUADRENC_NUM_ENCODERS);
 	i16 count = 0;
-	pcnt_get_counter_value(encoder_num, &count);
+	pcnt_get_counter_value((pcnt_unit_t)encoder_num, &count);
 	return count + l_count_base[encoder_num];
 }
 

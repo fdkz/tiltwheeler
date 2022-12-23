@@ -6,6 +6,9 @@
 #include "stdints.h"
 
 
+const int MOTOR_LEFT = 0;
+const int MOTOR_RIGHT = 1;
+
 void motor_init();
 void motor_freewheel(u32 motor);
 void motor_brake(u32 motor);

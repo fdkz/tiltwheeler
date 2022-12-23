@@ -49,8 +49,8 @@ motor_t l_motors[2] = {
 		.mcpwm_num = MCPWM_UNIT_0,
 		.timer_num = MCPWM_TIMER_1,
 		.duty_type = MCPWM_DUTY_MODE_1,
-		.gpio_a = GPIO_NUM_16,
-		.gpio_b = GPIO_NUM_17,
+		.gpio_a = GPIO_NUM_27,
+		.gpio_b = GPIO_NUM_26,
 	}
 };
 
@@ -121,8 +121,8 @@ void motor_set_duty(u32 motor, float duty) {
 
 	// Select which pin should generate pwm and which should remain high/low depending on motor direction.
 	if (duty < 0) {
-		static_gen = MCPWM_OPR_A;
-		pwm_gen = MCPWM_OPR_B;
+		pwm_gen = MCPWM_OPR_A;
+		static_gen = MCPWM_OPR_B;
 		duty = -duty;
 	}
 
